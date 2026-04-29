@@ -49,4 +49,34 @@ export class ToDoPage {
     const itemCount: number = await this.main.getByTestId("todo-item").count();
     expect(itemCount).toBe(expectedCount);
   }
+
+  // Homework 19
+  async clearCompleted(): Promise<void> {
+    const footerClearCompleted = await this.footer.getByRole("button", {
+      name: "Clear completed",
+    });
+    await footerClearCompleted.click();
+  }
+
+  async completed(): Promise<void> {
+    const footerCompleted = await this.footer.getByRole("link", {
+      name: "Completed",
+    });
+    await footerCompleted.click();
+    await expect(footerCompleted).toHaveClass("selected");
+  }
+
+  async active(): Promise<void> {
+    const footerActive = await this.footer.getByRole("link", {
+      name: "Active",
+    });
+    await footerActive.click();
+    await expect(footerActive).toHaveClass("selected");
+  }
+
+  async all(): Promise<void> {
+    const all = await this.footer.getByRole("link", { name: "All" });
+    await all.click();
+    await expect(all).toHaveClass("selected");
+  }
 }

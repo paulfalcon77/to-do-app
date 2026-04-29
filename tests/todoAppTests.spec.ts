@@ -46,4 +46,53 @@ test("Delete card test", async ({ page }) => {
   await toDoPage.checkToDoItemsVisible(0);
 });
 
+// Homework 19
+
+test("Create 2 to-do item and check Clear completed ", async ({ page }) => {
+  const toDoPage = new ToDoPage(page);
+  await toDoPage.goto();
+  await toDoPage.createToDoItem();
+  await toDoPage.createToDoItem();
+  await toDoPage.checkToDoItemsVisible(2);
+  const createdToDo = toDoPage.getToDoItemByIndex(0);
+  await createdToDo.activate();
+  await createdToDo.checkIsActivated();
+  await toDoPage.clearCompleted();
+  await toDoPage.checkToDoItemsVisible(1);
+});
+
+test("Create 2 to-do item and check Completed and ALL links ", async ({
+  page,
+}) => {
+  const toDoPage = new ToDoPage(page);
+  await toDoPage.goto();
+  await toDoPage.createToDoItem();
+  await toDoPage.createToDoItem();
+  await toDoPage.checkToDoItemsVisible(2);
+  const createdToDo = toDoPage.getToDoItemByIndex(0);
+  await createdToDo.activate();
+  await createdToDo.checkIsActivated();
+  await toDoPage.completed();
+  await toDoPage.checkToDoItemsVisible(1);
+  await toDoPage.all();
+  await toDoPage.checkToDoItemsVisible(2);
+});
+
+test("Create 2 to-do item and check Active and ALL links ", async ({
+  page,
+}) => {
+  const toDoPage = new ToDoPage(page);
+  await toDoPage.goto();
+  await toDoPage.createToDoItem();
+  await toDoPage.createToDoItem();
+  await toDoPage.checkToDoItemsVisible(2);
+  const createdToDo = toDoPage.getToDoItemByIndex(0);
+  await createdToDo.activate();
+  await createdToDo.checkIsActivated();
+  await toDoPage.active();
+  await toDoPage.checkToDoItemsVisible(1);
+  await toDoPage.all();
+  await toDoPage.checkToDoItemsVisible(2);
+});
+
 //npx playwright test -g "Activate card test" --debug
