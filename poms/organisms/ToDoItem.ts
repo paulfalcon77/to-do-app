@@ -1,5 +1,5 @@
 import { expect, Locator } from "@playwright/test";
-import { th } from "@faker-js/faker";
+
 
 export class ToDoItem {
   readonly container: Locator;
