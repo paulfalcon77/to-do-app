@@ -95,4 +95,11 @@ test("Create 2 to-do item and check Active and ALL links ", async ({
   await toDoPage.checkToDoItemsVisible(2);
 });
 
+test("Check External Footer", async ({ page }) => {
+  const toDoPage = new ToDoPage(page);
+  await toDoPage.goto();
+  await toDoPage.externalFooterLink();
+  await toDoPage.checkExternalFooter();
+});
+
 //npx playwright test -g "Activate card test" --debug

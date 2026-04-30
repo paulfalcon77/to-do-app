@@ -1,6 +1,5 @@
 import { expect, Locator } from "@playwright/test";
 
-
 export class ToDoItem {
   readonly container: Locator;
   readonly markDone: Locator;

@@ -9,7 +9,7 @@ export class ToDoPage {
   readonly main: Locator;
   readonly footer: Locator;
   readonly todoItemInput: Locator;
-  //readonly externalFooter: Locator
+  readonly externalFooter: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +17,7 @@ export class ToDoPage {
     this.main = page.getByTestId("main");
     this.footer = page.getByTestId("footer");
     this.todoItemInput = page.getByTestId("text-input");
+    this.externalFooter = page.locator(".info");
   }
 
   getToDoItemByIndex(index: number): ToDoItem {
@@ -52,14 +53,14 @@ export class ToDoPage {
 
   // Homework 19
   async clearCompleted(): Promise<void> {
-    const footerClearCompleted = await this.footer.getByRole("button", {
+    const footerClearCompleted = this.footer.getByRole("button", {
       name: "Clear completed",
     });
     await footerClearCompleted.click();
   }
 
   async completed(): Promise<void> {
-    const footerCompleted = await this.footer.getByRole("link", {
+    const footerCompleted = this.footer.getByRole("link", {
       name: "Completed",
     });
     await footerCompleted.click();
@@ -67,7 +68,7 @@ export class ToDoPage {
   }
 
   async active(): Promise<void> {
-    const footerActive = await this.footer.getByRole("link", {
+    const footerActive = this.footer.getByRole("link", {
       name: "Active",
     });
     await footerActive.click();
@@ -75,8 +76,19 @@ export class ToDoPage {
   }
 
   async all(): Promise<void> {
-    const all = await this.footer.getByRole("link", { name: "All" });
+    const all = this.footer.getByRole("link", { name: "All" });
     await all.click();
     await expect(all).toHaveClass("selected");
+  }
+
+  async checkExternalFooter(): Promise<void> {
+    await expect(this.externalFooter).toContainText(
+      "Double-click to edit a todo",
+    );
+  }
+
+  async externalFooterLink(): Promise<void> {
+    const todoMVC = this.externalFooter.getByRole("link", { name: "TodoMVC" });
+    await expect(todoMVC).toHaveAttribute("href", "http://todomvc.com");
   }
 }
